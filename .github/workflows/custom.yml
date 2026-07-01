@@ -74,21 +74,20 @@ jobs:
         run: |
           pip install -r requirements.txt
 
-          # https://github.com/ryanoasis/nerd-fonts/blob/b3c1b0cf424ac32915cf4fd822c3938d4a815566/.github/workflows/release.yml#L144-L166
-          if [[ "${{ github.event.inputs.build_args }}" == *"--font-patcher"* ]] || python build.py --dry | jq -e '.nerd_font.use_font_patcher == true' >/dev/null; then
-            sudo apt update -y -q
-            sudo apt install software-properties-common -y -q
-            sudo apt install python3-fontforge -y -q
-            sudo apt install fuse -y -q
+          # Install FontForge unconditionally because our custom patcher requires it
+          sudo apt update -y -q
+          sudo apt install software-properties-common -y -q
+          sudo apt install python3-fontforge -y -q
+          sudo apt install fuse -y -q
 
-            curl -L "https://github.com/fontforge/fontforge/releases/download/20230101/FontForge-2023-01-01-a1dad3e-x86_64.AppImage" --output fontforge
-            chmod u+x fontforge
-            echo Try appimage
-            ./fontforge --version
-            export PATH=`pwd`:$PATH
-            echo "PATH=$PATH" >> $GITHUB_ENV
-            echo Try appimage with path
-            fontforge --version
+          curl -L "https://github.com/fontforge/fontforge/releases/download/20230101/FontForge-2023-01-01-a1dad3e-x86_64.AppImage" --output fontforge
+          chmod u+x fontforge
+          echo Try appimage
+          ./fontforge --version
+          export PATH=`pwd`:$PATH
+          echo "PATH=$PATH" >> $GITHUB_ENV
+          echo Try appimage with path
+          fontforge --version
           fi
 
       - name: Run custom script
