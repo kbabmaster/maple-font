@@ -78,7 +78,7 @@
     "glyphs": [
       "--complete"
     ],
-    "extra_args": [-l --careful --outputdir dir --variable-width-glyphs]
+    "extra_args": ["--variable-width-glyphs"]
   },
   "cn": {
     "enable": false,
